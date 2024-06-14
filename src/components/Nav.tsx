@@ -1,37 +1,43 @@
-import { Link } from 'react-router-dom'
-import { TonConnectButton } from '@tonconnect/ui-react'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { TonConnectButton } from '@tonconnect/ui-react';
+import './Nav.css'; // Make sure to import the external CSS
 
 function Nav() {
-  return (
-    <>
-      <div className="fixed z-10 backdrop-blur-sm w-full">
-        <section className="relative mx-auto">
-          <nav className="flex justify-between text-white w-full px-4 md:px-24">
-            <div className="px-5 xl:px-12 py-6 flex gap-10 w-full items-center justify-between">
-              <a className="text-3xl font-bold font-heading">
-                Ignitus Networks
-              </a>
-              <ul className="flex flex-wrap px-0 mx-auto text-sm md:text-base font-semibold font-heading space-x-6 md:space-x-12">
-                <Link className='no-underline text-gray-200' to="/">
-                  <li>Home</li>
-                </Link>
-                <Link className='no-underline text-gray-200' to="/all-nft">
-                  <li>All NFT</li>
-                </Link>
-                <Link className='no-underline text-gray-200' to="/create">
-                  <li>Mint NFT</li>
-                </Link>
-              </ul>
-              <div className="flex items-center space-x-5">
-                <TonConnectButton />
-              </div>
-            </div>
-          </nav>
-        </section>
-      </div>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    </>
-  )
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <div className="navbar transition duration-300 ease-in-out hover:bg-slate-600">
+      <section className="relative mx-auto">
+        <nav className="navbar-content">
+          <a className="navbar-brand text-sky-400">Ignitus Networks</a>
+          <ul className={`navbar-links ${isMenuOpen ? 'show' : ''}`}>
+            <Link className='no-underline text-gray-200' to="/" onClick={toggleMenu}>
+              <li>Home</li>
+            </Link>
+            <Link className='no-underline text-gray-200' to="/all-nft" onClick={toggleMenu}>
+              <li>All NFT</li>
+            </Link>
+            <Link className='no-underline text-gray-200' to="/create" onClick={toggleMenu}>
+              <li>Mint NFT</li>
+            </Link>
+          </ul>
+          <div className="navbar-button">
+            <TonConnectButton />
+            <div className="hamburger" onClick={toggleMenu}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </nav>
+      </section>
+    </div>
+  );
 }
 
-export default Nav  
+export default Nav;
